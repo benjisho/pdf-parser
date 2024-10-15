@@ -1,0 +1,25 @@
+name: PDF Parsing Workflow
+
+on:
+  repository_dispatch:
+    types: [parse_pdf] # Event name to trigger PDF parsing workflow
+
+jobs:
+  parse-pdf:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Run Docker Compose
+        run: docker compose run --rm --build pdf-parser
+
+      - name: Upload PDF Parsing Result
+        uses: actions/upload-artifact@v2
+        with:
+          name: parsed-txt
+          path: output_files/*.txt
