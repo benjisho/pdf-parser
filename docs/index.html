@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Parser</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Upload PDF to Parse</h1>
-    <form id="pdf-upload-form" action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="pdf" accept="application/pdf" required>
-        <button type="submit">Upload</button>
-    </form>
-    <div id="status"></div>
+    <div class="container">
+        <h1>Upload PDF to Parse</h1>
+        <form id="pdf-upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="pdf" accept="application/pdf" required>
+            <button type="submit">Upload</button>
+        </form>
+        <div id="status"></div>
+    </div>
 
     <script>
         const form = document.getElementById('pdf-upload-form');
@@ -21,23 +25,25 @@
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             const formData = new FormData(form);
+            statusDiv.innerHTML = `<p>Processing your file... Please wait.</p>`; // Add processing message
 
             try {
                 const response = await fetch('/upload', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const result = await response.json();
                 if (response.ok) {
-                    statusDiv.innerHTML = `<p>PDF parsed successfully. <a href="${result.downloadUrl}">Download .txt file</a></p>`;
+                    statusDiv.innerHTML = `<p>PDF parsed successfully. <a href="${result.downloadUrl}" target="_blank">Download .txt file</a></p>`;
                 } else {
-                    statusDiv.innerHTML = `<p>Error: ${result.message}</p>`;
+                    statusDiv.innerHTML = `<p class="error">Error: ${result.message}</p>`;
                 }
             } catch (error) {
-                statusDiv.innerHTML = `<p>Error uploading file: ${error.message}</p>`;
+                statusDiv.innerHTML = `<p class="error">Error uploading file: ${error.message}</p>`;
             }
         });
     </script>
 </body>
+
 </html>
