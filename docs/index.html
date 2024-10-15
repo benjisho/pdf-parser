@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Parser</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
         <h1>Upload PDF to Parse</h1>
@@ -15,7 +13,7 @@
             <input type="file" name="pdf" accept="application/pdf" required>
             <button type="submit">Upload</button>
         </form>
-        <div id="status"></div>
+        <div id="status" class="status"></div>
     </div>
 
     <script>
@@ -33,17 +31,26 @@
                     body: formData
                 });
 
-                const result = await response.json();
+                let result;
+
+                // Try to parse the response as JSON
+                try {
+                    result = await response.json();
+                } catch (parseError) {
+                    // Handle the case where response is not JSON
+                    throw new Error("The server returned an unexpected response format. Please try again later.");
+                }
+
                 if (response.ok) {
                     statusDiv.innerHTML = `<p>PDF parsed successfully. <a href="${result.downloadUrl}" target="_blank">Download .txt file</a></p>`;
                 } else {
                     statusDiv.innerHTML = `<p class="error">Error: ${result.message}</p>`;
                 }
             } catch (error) {
+                // Catch any other errors and display an appropriate message
                 statusDiv.innerHTML = `<p class="error">Error uploading file: ${error.message}</p>`;
             }
         });
     </script>
 </body>
-
 </html>
