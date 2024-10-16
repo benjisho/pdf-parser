@@ -41,7 +41,8 @@
                 try {
                     result = JSON.parse(textResponse);
                 } catch (parseError) {
-                    // Handle the case where response is not JSON
+                    // Display the raw response if parsing fails
+                    statusDiv.innerHTML = `<p class="error">Server returned unexpected response: <pre>${textResponse}</pre></p>`;
                     throw new Error("The server returned an unexpected response format. Please try again later.");
                 }
 
