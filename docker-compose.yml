@@ -1,14 +1,27 @@
 
-services:
-  pdf-parser:
-    image: benjisho/pdf-parser
+  services:
+    pdf-parser:
+      image: benjisho/pdf-parser
+      build:
+        context: .
+        dockerfile: Dockerfile.pdf-parser
+      volumes:
+        - ./pdf_files_to_parse:/app/pdf_files_to_parse:rw  # Map local directory for input PDFs
+        - ./output_files:/app/output_files:rw  # Map local directory for output summaries
+      environment:
+        - PYTHONUNBUFFERED=1  # Ensure Python output is immediately flushed
+      restart: unless-stopped
+      # command: ["--debug"]  # Uncomment to run with debug flag if needed
+
+  web-backend:
     build:
       context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./pdf_files_to_parse:/app/pdf_files_to_parse:rw  # Map local directory for input PDFs
-      - ./output_files:/app/output_files:rw  # Map local directory for output summaries
+      dockerfile: Dockerfile-flask  # Or use the pre-built image
+    ports:
+      - "5000:5000"
     environment:
-      - PYTHONUNBUFFERED=1  # Ensure Python output is immediately flushed
+      - FLASK_ENV=development
+    volumes:
+      - ./pdf_files_to_parse:/app/pdf_files_to_parse:rw
+      - ./output_files:/app/output_files:rw
     restart: unless-stopped
-    # command: ["--debug"]  # Uncomment to run with debug flag if needed

@@ -6,6 +6,8 @@ FROM python:3.12.7-slim-bookworm
 # Set working directory for the application
 WORKDIR /app
 
+
+
 # Copy Python requirements file first to take advantage of Docker layer caching
 COPY requirements.txt ./
 
