@@ -1,80 +1,19 @@
-/* Reset some default styles for consistency across browsers */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7fc; /* Light grey background for contrast */
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: #333; /* Darker text for readability */
 }
 
-/* Header Styling */
-h1 {
-    font-size: 2.5rem;
-    color: #2c3e50; /* Dark blue-grey color */
-    margin-bottom: 20px;
-}
-
-/* Form Styling */
-form {
-    background: #ffffff; /* White background for the form */
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-/* Input File Button */
-input[type="file"] {
-    padding: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-/* Submit Button Styling */
-button {
-    background-color: #3498db; /* Light blue for the button */
-    color: #ffffff; /* White text color */
-    border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
+.container {
+    background-color: #fff;
+    padding: 20px;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
-}
-
-/* Status Message Styling */
-#status {
-    margin-top: 20px;
-    font-size: 1.1rem;
-    text-align: center;
-}
-
-#status p {
-    margin: 10px 0;
-}
-
-#status a {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#status a:hover {
-    text-decoration: underline;
+.hidden {
+    display: none;
 }
