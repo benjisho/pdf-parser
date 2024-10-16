@@ -43,8 +43,12 @@
                 } catch (parseError) {
                     // Display the raw response if parsing fails
                     statusDiv.innerHTML = `<p class="error">Server returned unexpected response: <pre>${textResponse}</pre></p>`;
+                    console.error("JSON parse error:", parseError);
                     throw new Error("The server returned an unexpected response format. Please try again later.");
                 }
+
+                // Log the parsed JSON response
+                console.log("Parsed server response:", result);
 
                 if (response.ok) {
                     statusDiv.innerHTML = `<p>PDF parsed successfully. <a href="${result.downloadUrl}" target="_blank">Download .txt file</a></p>`;
@@ -53,6 +57,7 @@
                 }
             } catch (error) {
                 // Catch any other errors and display an appropriate message
+                console.error("Error uploading file:", error);
                 statusDiv.innerHTML = `<p class="error">Error uploading file: ${error.message}</p>`;
             }
         });
