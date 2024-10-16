@@ -31,11 +31,15 @@
                     body: formData
                 });
 
+                // Log the raw response to help debug issues
+                const textResponse = await response.text();
+                console.log("Raw server response:", textResponse);
+
                 let result;
 
                 // Try to parse the response as JSON
                 try {
-                    result = await response.json();
+                    result = JSON.parse(textResponse);
                 } catch (parseError) {
                     // Handle the case where response is not JSON
                     throw new Error("The server returned an unexpected response format. Please try again later.");
